@@ -1,0 +1,106 @@
+# File is managed by Puppet
+
+# log file to watch
+SECURE_LOG = <%= scope.lookupvar('denyhosts::params::secure_log') %>
+
+# where blocked hosts should be written to
+HOSTS_DENY = <%= scope.lookupvar('denyhosts::params::hosts_deny') %>
+
+# purge entries older than 1 week
+PURGE_DENY = 1w
+
+# a denied host will be purged at most 2 times. 
+PURGE_THRESHOLD = 2 
+
+# the service name that should be blocked in HOSTS_DENY
+BLOCK_SERVICE = <%= scope.lookupvar('denyhosts::block_service') %>
+
+# block each host after the number of failed login attempts
+DENY_THRESHOLD_INVALID = 3
+
+# block each host after the number of failed login attempts with a valid user
+DENY_THRESHOLD_VALID = 3
+
+# block each host after the number of failed root login attempts
+DENY_THRESHOLD_ROOT = 3
+
+# the path that DenyHosts will use for writing data to
+WORK_DIR = <%= scope.lookupvar('denyhosts::params::work_dir') %>
+
+# hostname lookup for each IP address that is reported by DenyHosts
+HOSTNAME_LOOKUP=YES
+
+# lock file location
+LOCK_FILE = <%= scope.lookupvar('denyhosts::params::lock_file') %>
+
+# email address to send reports to
+ADMIN_EMAIL = <%= scope.lookupvar('denyhosts::admin_email') %>
+
+# SMTP host and port to connect to if ADMIN_EMAIL is set
+SMTP_HOST = <%= scope.lookupvar('denyhosts::smtp_host') %>
+SMTP_PORT = <%= scope.lookupvar('denyhosts::smtp_port') %>
+
+<% if scope.lookupvar('denyhosts::smtp_username') and scope.lookupvar('denyhosts::smtp_password') -%>
+# SMTP username and password
+SMTP_USERNAME = <%= scope.lookupvar('denyhosts::smtp_username') %>
+SMTP_PASSWORD = <%= scope.lookupvar('denyhosts::smtp_password') -%>
+<% end -%>
+
+# Use the following as SMTP FROM: address
+SMTP_FROM = DenyHosts <%= hostname -%> <denyhosts@<%= fqdn -%>>
+
+# Set "Subject:" of reports to the following
+SMTP_SUBJECT = DenyHosts Report
+
+# Write report data of denied hosts to syslog
+<% if scope.lookupvar('denyhosts::syslog_report') -%>
+SYSLOG_REPORT = YES
+<% else -%>
+SYSLOG_REPORT = NO
+<% end -%>
+
+# time between login attempts as valid users, when exceed host failed count will be reset
+AGE_RESET_VALID=5d
+
+# time between login attempts as root, when exceed host failed count will be reset
+AGE_RESET_ROOT=25d
+
+# time between login attempts as non-existent users, when exceed host failed count will be reset
+AGE_RESET_INVALID=10d
+
+# reset failed count for the respective ip address if login is successful
+RESET_ON_SUCCESS = yes
+
+# logfile that DenyHosts uses to report its status in daemon mode
+DAEMON_LOG = <%= scope.lookupvar('denyhosts::log') %>
+ 
+# in daemon mode sleep amount of time between pollinge SECURE_LOG
+DAEMON_SLEEP = 30s
+
+# in daemon mode expire old entries in HOSTS_DENY
+DAEMON_PURGE = 1h
+
+<% if scope.lookupvar('denyhosts::sync') -%>
+# Sync with denyhosts.net server
+SYNC_SERVER = http://xmlrpc.denyhosts.net:9911
+
+# allow your DenyHosts daemon to transmit hosts that have been denied
+<% if scope.lookupvar('denyhosts::sync_upload') -%>
+SYNC_UPLOAD = yes
+<% else -%>
+SYNC_UPLOAD = no
+<% end -%>
+
+# allow your DenyHosts daemon to receive hosts that have been denied by others
+<% if scope.lookupvar('denyhosts::sync_download') -%>
+SYNC_DOWNLOAD = yes
+<% else -%>
+SYNC_DOWNLOAD = no
+<% end -%>
+
+# Only obtain hosts that have been blocked this many times by others
+SYNC_DOWNLOAD_THRESHOLD = 3
+
+# Only obtain hackers that have been at it for 5 hours or more:
+SYNC_DOWNLOAD_RESILIENCY = 5h
+<% end -%>
