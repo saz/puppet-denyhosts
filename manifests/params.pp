@@ -14,7 +14,7 @@ class denyhosts::params {
         centos: {
             $package_name = 'denyhosts'
             $service_name = 'denyhosts'
-            $service_pattern = 'python /usr/sbin/denyhosts'
+            $service_pattern = 'python /usr/bin/denyhosts.py'
             $config_file = '/etc/denyhosts/denyhosts.cfg'
             $secure_log = '/var/log/secure'
             $hosts_deny = '/etc/hosts.deny'
