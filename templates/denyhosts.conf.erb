@@ -24,6 +24,9 @@ DENY_THRESHOLD_VALID = 3
 # block each host after the number of failed root login attempts
 DENY_THRESHOLD_ROOT = 3
 
+# block each host after the number of failed restricted user logins
+DENY_THRESHOLD_RESTRICTED = 3
+
 # the path that DenyHosts will use for writing data to
 WORK_DIR = <%= scope.lookupvar('denyhosts::params::work_dir') %>
 
