@@ -23,7 +23,7 @@ class denyhosts::params {
         }
 
         default: {
-            fail("unknown OS $::operatingsystem")
+            fail("unknown OS ${::operatingsystem}")
         }
     }
 }
