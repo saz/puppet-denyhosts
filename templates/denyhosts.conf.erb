@@ -50,7 +50,7 @@ SMTP_PASSWORD = <%= scope.lookupvar('denyhosts::smtp_password') -%>
 <% end -%>
 
 # Use the following as SMTP FROM: address
-SMTP_FROM = DenyHosts <%= hostname -%> <denyhosts@<%= fqdn -%>>
+SMTP_FROM = DenyHosts <%= @hostname -%> <denyhosts@<%= @fqdn -%>>
 
 # Set "Subject:" of reports to the following
 SMTP_SUBJECT = DenyHosts Report
