@@ -11,7 +11,7 @@ class denyhosts::params {
             $lock_file = '/var/run/denyhosts.pid'
         }
 
-        centos: {
+        /(RedHat|CentOS|Fedora)/: {
             $package_name = 'denyhosts'
             $service_name = 'denyhosts'
             $service_pattern = 'python /usr/bin/denyhosts.py'
