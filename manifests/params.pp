@@ -1,6 +1,6 @@
 class denyhosts::params {
-    case $::operatingsystem {
-        /(Ubuntu|Debian)/: {
+    case $::osfamily {
+        'Debian': {
             $package_name = 'denyhosts'
             $service_name = 'denyhosts'
             $service_pattern = 'python /usr/sbin/denyhosts'
@@ -10,8 +10,7 @@ class denyhosts::params {
             $work_dir = '/var/lib/denyhosts'
             $lock_file = '/var/run/denyhosts.pid'
         }
-
-        /(RedHat|CentOS|Fedora)/: {
+        'RedHat': {
             $package_name = 'denyhosts'
             $service_name = 'denyhosts'
             $service_pattern = 'python /usr/bin/denyhosts.py'
@@ -21,9 +20,8 @@ class denyhosts::params {
             $work_dir = '/var/lib/denyhosts'
             $lock_file = '/var/lock/subsys/denyhosts'
         }
-
         default: {
-            fail("unknown OS ${::operatingsystem}")
+          fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
         }
     }
 }
