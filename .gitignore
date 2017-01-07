@@ -1,4 +1,9 @@
 pkg/
 *.swp
-metadata.json
-*~
+*.swo
+.forge-releng
+/spec/fixtures
+.DS_Store
+.gemfile.lock
+Gemfile.lock
+vendor/

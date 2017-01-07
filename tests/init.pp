@@ -1,1 +1,1 @@
-include denyhosts
+include ::denyhosts

@@ -3,7 +3,7 @@ class denyhosts::config {
         ensure  => present,
         owner   => root,
         group   => root,
-        mode    => 644,
+        mode    => '0644',
         content => template("${module_name}/denyhosts.conf.erb"),
         require => Class['denyhosts::install'],
         notify  => Class['denyhosts::service'],
